@@ -6,28 +6,17 @@ import java.util.*;
 
 public class BookingDAO {
 	
-	public int addBooking(Booking booking) throws SQLException {
+	public void addBooking(Booking booking) throws SQLException {
 		String insert = "insert into booking(pname,mobile,tdate,bus_no,mailid) values(?,?,?,?,?);";
-		String bookingid = "Select booking_id from where Bus_no=? and pname=? and mobile=? and Tdate=?";
 		Connection con = DBconnection.getConnection();
 		PreparedStatement pst = con.prepareStatement(insert);
-		pst.setString(1, booking.passengerName);
-		pst.setLong(2, booking.mobileNumber);
-		java.sql.Date sqldate = new java.sql.Date (booking.travelDate.getTime());
+		pst.setString(1, booking.getPassengerName());
+		pst.setLong(2, booking.getMobileNumber());
+		java.sql.Date sqldate = new java.sql.Date (booking.gettravelDate().getTime());
 		pst.setDate(3, sqldate);
-		pst.setInt(4, booking.BusNo);
-		pst.setString(5, booking.mailId);
+		pst.setInt(4, booking.getBusNo());
+		pst.setString(5, booking.getMailId());
 		int rows = pst.executeUpdate();
-		PreparedStatement pst1 = con.prepareStatement(bookingid);
-		pst1.setString(1, booking.passengerName);
-		pst1.setLong(2, booking.mobileNumber);
-		java.sql.Date sqldate1 = new java.sql.Date (booking.travelDate.getTime());
-		pst1.setDate(3, sqldate);
-		pst1.setInt(4, booking.BusNo);
-		pst1.setString(5, booking.mailId);
-		ResultSet rows1 = pst.executeQuery();
-		rows1.next();
-		return rows1.getInt(1);
 	}
 	
 	public int getbookedcount(int Busno, java.util.Date date) throws SQLException {
@@ -76,12 +65,13 @@ public class BookingDAO {
 		Connection con = DBconnection.getConnection();
 		Statement st = con.createStatement();
 		ResultSet rs = st.executeQuery(PassengerInfo);
+		rs.next();
 		System.out.println("-------------------------------------------------------------");
 		System.out.println("Name: "+rs.getString(2));
 		System.out.println("Mobile Number" + rs.getInt(3));
 		System.out.print("BusNo: " + rs.getInt(5)+ "        ");
-		System.out.println("Travel Date " + rs.getDate(4));
-		System.out.println("Mail ID " + rs.getString(6));
+		System.out.println("Travel Date: " + rs.getDate(4));
+		System.out.println("Mail ID: " + rs.getString(6));
 		System.out.println("-------------------------------------------------------------");
 	}
 }

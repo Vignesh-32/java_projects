@@ -34,12 +34,11 @@ public class project {
 				System.out.println("To book a seat: ");
 				Booking booking = new Booking();
 				if(booking.isAvailable()) {
-					int bookingid = bookingdao.addBooking(booking);
+					bookingdao.addBooking(booking);
 					System.out.println("Your Booking is successfully finished.");
-					System.out.println("Your Booking Id :- "+ bookingid);
 				}
 				else {
-					System.out.println("Sorry, BusNo "+booking.BusNo+" reservation is full on specified date");
+					System.out.println("Sorry, BusNo "+booking.getBusNo()+" reservation is full on specified date");
 				}
 				break;
 			case 2:
@@ -51,9 +50,13 @@ public class project {
 			case 3:
 				System.out.println("To cancel a booking:-");
 				System.out.println("");
+				System.out.println("Enter the Bus No:-");
 				int busNo = scan.nextInt();
+				System.out.println("Enter the Travel Date:-");
 				String date = scan.next();
+				System.out.println("Enter the Name:-");
 				String name = scan.next();
+				System.out.println("Enter the Mobile Number:-");
 				int mobilenum = scan.nextInt();
 				int rw = bookingdao.cancelBooking(busNo, name, mobilenum, date);
 				System.out.println("Your booking has been Cancelled");

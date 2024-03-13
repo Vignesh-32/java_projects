@@ -20,7 +20,7 @@ public class BusDAO {
 			System.out.println("Driver Name: " + rs.getString(3));
 			System.out.print("Starting Point: " + rs.getString(4)+"  ");
 			System.out.println("Destination: " + rs.getString(5));
-			System.out.print("Remaining Seats: " + rs.getInt(7) +"     ");
+			System.out.print("Total Seats: " + rs.getInt(7) +"     ");
 			System.out.print("Remaining Seats: " + rem_seats +"    ");
 			if(rs.getInt(6)==1)
 				System.out.println("AC: YES");
@@ -59,17 +59,17 @@ public class BusDAO {
 		String insert = "insert into bus(Bus_No,Driver,Starting_point,Destination,AC,Capacity) values(?,?,?,?,?,?);";
 		Connection con = DBconnection.getConnection();
 		PreparedStatement pst = con.prepareStatement(insert);
-		pst.setInt(1, bus.busNo);
-		pst.setString(2, bus.DriverName);
-		pst.setString(3, bus.StartingPoint);
-		pst.setString(4, bus.Destination);
-		pst.setBoolean(5, bus.AC);
-		pst.setInt(6, bus.capacity);
+		pst.setInt(1, bus.getBusNo());
+		pst.setString(2, bus.getDriverName());
+		pst.setString(3, bus.getStartingPoint());
+		pst.setString(4, bus.getDestination());
+		pst.setBoolean(5, bus.isAC());
+		pst.setInt(6, bus.getCapacity());
 		int row = pst.executeUpdate();
 		return row;
 	}
 	public int cancelBus(int BusNo) throws SQLException {
-		String cancel = "update bus set bstatus = 'Cancelled' where BusNo = "+ BusNo;
+		String cancel = "update bus set bstatus = 'Cancelled' where Bus_No = "+ BusNo;
 		Connection con = DBconnection.getConnection();
 		Statement pst = con.createStatement();
 		int row = pst.executeUpdate(cancel);
